@@ -1,0 +1,24 @@
+{
+    "name": "Pet Food Tracker Server",
+    "version": "0.0.1",
+    "description": "This server will track the logins and serve as go between for the frontend and the database",
+    "main": "server.js",
+    "scripts": {
+        "start": "npm install && node server"
+    },
+    "author": "me",
+    "dependencies": {
+        "bcrypt": "*",
+        "cookie-parser": "*",
+        "dotenv": "*",
+        "ejs": "*",
+        "express": "*",
+        "express-flash": "*",
+        "express-formidable": "*",
+        "express-session": "*",
+        "mongodb": "*",
+        "passport": "*",
+        "passport-local": "*",
+        "shortid": "*"
+    }
+}
