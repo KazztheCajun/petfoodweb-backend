@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const routes = require('./routes/routes');
 const session = require('express-session');
 const passport = require('./middlewares/passport-config.js');
