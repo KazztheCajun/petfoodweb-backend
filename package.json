@@ -6,9 +6,12 @@
     "scripts": {
         "start": "npm install && node server"
     },
+    "engines": {
+        "node": "15.12.0",
+        "npm": "7.12.1"
+      },
     "author": "me",
     "dependencies": {
-	"node": "*",
         "bcrypt": "*",
         "cookie-parser": "*",
         "dotenv": "*",
