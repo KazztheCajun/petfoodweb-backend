@@ -1,6 +1,6 @@
 {
-    "name": "Pet Food Tracker Server",
-    "version": "0.0.1",
+    "name": "TrackerServer",
+    "version": "1.0.0",
     "description": "This server will track the logins and serve as go between for the frontend and the database",
     "main": "server.js",
     "scripts": {
@@ -8,6 +8,7 @@
     },
     "author": "me",
     "dependencies": {
+	"node": "*",
         "bcrypt": "*",
         "cookie-parser": "*",
         "dotenv": "*",
