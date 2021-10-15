@@ -4,7 +4,7 @@ const USERS = require("../models/users");
 const shortid = require('shortid');
 const MongoClient = require('mongodb').MongoClient;
 const PASS = process.env.PASS
-const API_KEY = `mongodb+srv://KazztheCajun:${PASS}@cajuncluster.7z3ar.mongodb.net/PetFoodApp?retryWrites=true&w=majority`;
+const API_KEY = `mongodb+srv://KazztheCajun:onedSixplus12@cajuncluster.7z3ar.mongodb.net/PetFoodApp?retryWrites=true&w=majority`;
 const mongo = new MongoClient(API_KEY,{ useNewUrlParser: true, useUnifiedTopology: true });
 const passport = require('../middlewares/passport-config');
 
