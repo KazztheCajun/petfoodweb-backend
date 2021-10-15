@@ -7,7 +7,7 @@ const API_KEY = "mongodb+srv://KazztheCajun:*********************************.mo
 const mongo = new MongoClient(API_KEY,{ useNewUrlParser: true, useUnifiedTopology: true });
 const passport = require('../middlewares/passport-config');
 
-mongo.connect( async (err) =>
+mongo.connect( async (err) => // all calls to the mongo database have to be made withing the connect block
 {
     if (err)
     {
@@ -15,13 +15,13 @@ mongo.connect( async (err) =>
     }
     console.log("[Server] Connected to Pet Food App Database successfully.");
 
-    const savedHomes = mongo.db("PetFoodApp").collection("Homes");
-    const savedUsers = mongo.db("PetFoodApp").collection("Users");
+    const savedHomes = mongo.db("PetFoodApp").collection("Homes"); // save the homes database connection for later use
+    const savedUsers = mongo.db("PetFoodApp").collection("Users"); // save the users database connection for later use
 
     console.log("[Server] Loading saved users");
     
     //Server Setup
-    async function updateServer()
+    async function updateServer() // check the database for current list of tracked users
     {
         let saved = await savedUsers.find({}).toArray();
         //console.log(saved);
@@ -59,7 +59,7 @@ mongo.connect( async (err) =>
         const home = {home: name, _id: shortid.generate(), pets: [], log: []};
         const res = await savedHomes.insertOne(home);
         // console.log(res);
-        const date = new Date();
+        const date = new Date(Date.now());
         console.log(`[Server] ${name} created at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
         updateServer();
         response.json({"success": true, "message": "A home was found", "home": home});
@@ -68,9 +68,9 @@ mongo.connect( async (err) =>
     // gets the list of homes currently saved in the database
     router.post("/list/homes", async(request, response) =>
     {
-        const homes = request.body;
+        const homes = request.body; // Get the names of the homes a user has access too
     //    console.log(homes);
-        let homeList = await savedHomes.find({_id: {$in: homes}}).project({pets:0, log:0}).toArray();
+        let homeList = await savedHomes.find({_id: {$in: homes}}).project({pets:0, log:0}).toArray(); // load those homes from the database
     //    console.log(homeList);
         response.json({"success": true, "message": "The list of homes the user has access to", "homes": homeList});
     });
@@ -78,10 +78,10 @@ mongo.connect( async (err) =>
     // updates the current home's data in the database
     router.post("/update/home", async(request, response) =>
     {
-        const home = request.body;
+        const home = request.body; // get the home data from the request body
         //console.log(home);
-        let r = await savedHomes.updateOne({_id: home._id}, {$set: {home: home.home, pets: home.pets, log: home.log}});
-        updateServer();
+        let r = await savedHomes.updateOne({_id: home._id}, {$set: {home: home.home, pets: home.pets, log: home.log}}); // update the home data in the database
+        updateServer(); // update the server to reflect any potential changes
         response.json({"success": true, "message": "Home was updated succesfully", "update": r});
     });
 
@@ -89,10 +89,10 @@ mongo.connect( async (err) =>
     router.post("/update/user", async(request, response) =>
     {
         console.log("updating:");
-        const user = request.body;
+        const user = request.body; // get user info from request body
         console.log(user);
-        let r = await savedUsers.updateOne({_id: user._id}, {$set: {homes: user.homes}});
-        updateServer();
+        let r = await savedUsers.updateOne({_id: user._id}, {$set: {homes: user.homes}}); // store the info in the database
+        updateServer(); // update the server to reflect any potential changes
         response.json({"success": true, "message": "User was updated succesfully", "update": r});
     });
 
