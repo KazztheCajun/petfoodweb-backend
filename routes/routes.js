@@ -22,6 +22,7 @@ mongo.connect( async (err) => // all calls to the mongo database have to be made
     console.log("[Server] Loading saved users");
     
     //Server Setup
+    
     async function updateServer() // check the database for current list of tracked users
     {
         let saved = await savedUsers.find({}).toArray();
